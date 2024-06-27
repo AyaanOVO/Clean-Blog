@@ -1,0 +1,48 @@
+{% include "header.html" %}
+<header
+  class="masthead"
+  style="background-image: url('../static/assets/img/home-bg.jpg')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>{{ author_name.title() }}'s Posts</h1>
+          <span class="subheading">A collection of random musings.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <!-- Post preview-->
+      {% for i in range(0, len) %}
+      <div class="post-preview">
+        <a href="{{ url_for('show_post', post_id=all_posts[i].id) }}">
+          <h2 class="post-title">{{ all_posts[i].title }}</h2>
+          <h3 class="post-subtitle">{{ all_posts[i].subtitle }}</h3>
+        </a>
+        <p class="post-meta">
+          Posted by
+          <!-- post.author.name is now a User object -->
+          <span> <strong>{{ all_posts[i].author.name }} </strong></span>
+          on {{all_posts[i].date}}
+          <!-- Only show delete button if user id is 1 (admin user) -->
+            {% if current_user.id == all_posts[i].author_id %}
+              <a href="{{url_for('delete_post', post_id=all_posts[i].id) }}">✘</a>
+            {% endif %}
+        </p>
+      </div>
+      <!-- Divider-->
+      {% if i+1 != len %}
+        <hr class="my-4" />
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}
