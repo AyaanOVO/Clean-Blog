@@ -285,4 +285,4 @@ def all_post_by_author(author):
 
 
 if __name__ == "__main__":
-    app.run(debug=False, port=5001)
+    app.run(debug=True)
